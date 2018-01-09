@@ -1,3 +1,6 @@
-[submodule "openwallet-core"]
-	path = openwallet-core
+[submodule "Modules/openwallet-core"]
+	path = Modules/openwallet-core
 	url = https://github.com/openwallet/openwallet-core.git
+[submodule "Modules/secp256k1"]
+	path = Modules/secp256k1
+	url = https://github.com/bitcoin-core/secp256k1.git
