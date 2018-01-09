@@ -1,0 +1,3 @@
+[submodule "openwallet-core"]
+	path = openwallet-core
+	url = https://github.com/openwallet/openwallet-core.git
