@@ -28,13 +28,11 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private var window: UIWindow? {
-        return applicationController.window
-    }
-    let applicationController = ApplicationController()
+    var window: UIWindow?
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        applicationController.launch(options: launchOptions)
+        // Override point for customization after application launch.
         return true
     }
 
@@ -60,6 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplicationExtensionPointIdentifier) -> Bool {
+        return false // disable extensions such as custom keyboards for security purposes
+    }
 
 }
 
