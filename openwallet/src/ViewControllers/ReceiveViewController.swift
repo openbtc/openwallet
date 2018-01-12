@@ -9,10 +9,7 @@
 import UIKit
 
 class ReceiveViewController: UIViewController {
-
     override func viewDidLoad() {
         view.backgroundColor = .white
     }
-    
- 
 }
