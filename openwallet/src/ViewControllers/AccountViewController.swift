@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccountViewController: UIViewController, Trackable {
+class AccountViewController: UIViewController {
 
     private let store: Store
     private let headerView = AccountHeaderView()
@@ -38,10 +38,6 @@ class AccountViewController: UIViewController, Trackable {
             ])
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        saveEvent("accout:did_appear")
-    }
     func addTransactionsView() {
         addChildViewController(transactions)
         view.addSubview(transactions.view)

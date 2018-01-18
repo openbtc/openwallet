@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ApplicationController: EventManagerCoordinator {
+class ApplicationController {
 
     //Ideally the window would be private, but is unfortunately required
     //by the UIApplicationDelegate Protocol
@@ -22,15 +22,7 @@ class ApplicationController: EventManagerCoordinator {
         setupRootViewController()
         setupAlertCoordinator()
         window.makeKeyAndVisible()
-        startEventManager()
         //store.perform(action: ShowStartFlow())
-    }
-
-    func performFetch(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        syncEventManager()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
-            completionHandler(.newData)
-        })
     }
 
     private func setupAppearance() {
