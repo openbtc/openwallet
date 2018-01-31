@@ -12,14 +12,10 @@ class ApplicationController: EventManagerCoordinator {
 
     //Ideally the window would be private, but is unfortunately required
     //by the UIApplicationDelegate Protocol
-    let window = UIWindow()
-    private let store = Store()
+    let window =                    UIWindow()
+    private let store =             Store()
     private var startFlowController: StartFlowPresenter?
     private var modalPresenter: ModalPresenter?
-
-    private let walletManager = try! WalletManager(dbPath: nil)
-    private var walletCreator: WalletCreator?
-    private var walletCoordinator: WalletCoordinator?
 
     func launch(options: [UIApplicationLaunchOptionsKey: Any]?) {
         setupAppearance()
@@ -27,16 +23,7 @@ class ApplicationController: EventManagerCoordinator {
         setupPresenters()
         window.makeKeyAndVisible()
         startEventManager()
-
-        if walletManager.noWallet {
-            walletCreator = WalletCreator(walletManager: walletManager, store: store)
-            store.perform(action: ShowStartFlow())
-        } else {
-            DispatchQueue.global(qos: .background).async {
-                self.walletManager.peerManager?.connect()
-            }
-        }
-        walletCoordinator = WalletCoordinator(walletManager: walletManager, store: store)
+        //store.perform(action: ShowStartFlow())
     }
 
     func performFetch(_ completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -59,7 +46,7 @@ class ApplicationController: EventManagerCoordinator {
         accountViewController.sendCallback = { self.store.perform(action: RootModalActions.Send()) }
         accountViewController.receiveCallback = { self.store.perform(action: RootModalActions.Receive()) }
         accountViewController.menuCallback = { self.store.perform(action: RootModalActions.Menu()) }
-        startFlowController = StartFlowPresenter(store: store, walletManager: walletManager, rootViewController: accountViewController)
+        startFlowController = StartFlowPresenter(store: store, rootViewController: accountViewController)
     }
 
     private func setupPresenters() {

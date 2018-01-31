@@ -16,21 +16,20 @@ struct ShowStartFlow: Action {
 }
 
 struct HideStartFlow: Action {
-    let reduce: Reducer = { state in
+    let reduce: Reducer = { _ in 
         return State(isStartFlowVisible:        false,
                      pinCreationStep:           .none,
                      paperPhraseStep:           .none,
                      rootModal:                 .none,
                      pasteboard:                UIPasteboard.general.string,
-                     isModalDismissalBlocked:   false,
-                     walletState: state.walletState )
+                     isModalDismissalBlocked:   false)
     }
 }
 
 //MARK: - Pin Creation
 struct PinCreation {
 
-    struct PinEntryComplete : Action {
+    struct PinEntryComplete: Action {
         let reduce: Reducer
 
         init(newPin: String) {
@@ -49,26 +48,15 @@ struct PinCreation {
         }
     }
 
-    struct Reset : Action {
+    struct Reset: Action {
         let reduce: Reducer = {
             return $0.clone(pinCreationStep: .none)
         }
     }
 
-    struct Start : Action {
+    struct Start: Action {
         let reduce: Reducer = {
             return $0.clone(pinCreationStep: .start)
-        }
-    }
-
-    struct SaveSuccess : Action {
-        let reduce: Reducer = {
-            switch $0.pinCreationStep {
-            case .save(let pin):
-                return $0.clone(pinCreationStep: .saveSuccess(pin: pin))
-            default:
-                assert(false, "Warning - invalid state")
-            }
         }
     }
 }
@@ -85,28 +73,48 @@ fileprivate func stateForNewPin(newPin: String, previousPin: String, state: Stat
 struct PaperPhrase {
     struct Start: Action {
         let reduce: Reducer = {
-            return $0.clone(paperPhraseStep: .start)
+            return State(isStartFlowVisible:    $0.isStartFlowVisible,
+                         pinCreationStep:       .none,
+                         paperPhraseStep:       .start,
+                         rootModal:             .none,
+                         pasteboard:            UIPasteboard.general.string,
+                         isModalDismissalBlocked: $0.isModalDismissalBlocked)
         }
     }
 
     struct Write: Action {
         let reduce: Reducer = {
-            return $0.clone(paperPhraseStep: .write)
+            return State(isStartFlowVisible:    $0.isStartFlowVisible,
+                         pinCreationStep:       .none,
+                         paperPhraseStep:       .write,
+                         rootModal:             .none,
+                         pasteboard:            UIPasteboard.general.string,
+                         isModalDismissalBlocked: $0.isModalDismissalBlocked)
         }
     }
 
     struct Confirm: Action {
         let reduce: Reducer = {
-            return $0.clone(paperPhraseStep: .confirm)
+            return State(isStartFlowVisible:    $0.isStartFlowVisible,
+                         pinCreationStep:       .none,
+                         paperPhraseStep:       .confirm,
+                         rootModal:             .none,
+                         pasteboard:            UIPasteboard.general.string,
+                         isModalDismissalBlocked: $0.isModalDismissalBlocked)
         }
     }
 
     struct Confirmed: Action {
         let reduce: Reducer = {
-            return $0.clone(paperPhraseStep: .confirmed)
+            return State(isStartFlowVisible:    $0.isStartFlowVisible,
+                         pinCreationStep:       .none,
+                         paperPhraseStep:       .confirmed,
+                         rootModal:             .none,
+                         pasteboard:            UIPasteboard.general.string,
+                         isModalDismissalBlocked: $0.isModalDismissalBlocked)
         }
     }
-} 
+}
 
 //MARK: - Root Modals
 struct RootModalActions {
@@ -145,22 +153,6 @@ enum ModalDismissal {
     }
 }
 
-//MARK: - Wallet State
-enum WalletChange {
-    struct setProgress: Action {
-        let reduce: Reducer
-        init(progress: Double) {
-            reduce = { $0.clone(walletSyncProgress: progress) }
-        }
-    }
-    struct setIsSyncing: Action {
-        let reduce: Reducer
-        init(_ isSyncing: Bool) {
-            reduce = { $0.clone(walletIsSyncing: isSyncing) }
-        }
-    }
-}
-
 //MARK: - State Creation Helpers
 extension State {
     func clone(isStartFlowVisible: Bool) -> State {
@@ -169,8 +161,7 @@ extension State {
                      paperPhraseStep:       self.paperPhraseStep,
                      rootModal:             self.rootModal,
                      pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: self.walletState)
+                     isModalDismissalBlocked: self.isModalDismissalBlocked)
     }
     func clone(pinCreationStep: PinCreationStep) -> State {
         return State(isStartFlowVisible:    self.isStartFlowVisible,
@@ -178,8 +169,7 @@ extension State {
                      paperPhraseStep:       self.paperPhraseStep,
                      rootModal:             self.rootModal,
                      pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: self.walletState)
+                     isModalDismissalBlocked: self.isModalDismissalBlocked)
     }
 
     func rootModal(_ type: RootModal) -> State {
@@ -188,8 +178,7 @@ extension State {
                      paperPhraseStep:       .none,
                      rootModal:             type,
                      pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: self.walletState)
+                     isModalDismissalBlocked: self.isModalDismissalBlocked)
     }
     func clone(pasteboard: String?) -> State {
         return State(isStartFlowVisible:    self.isStartFlowVisible,
@@ -197,8 +186,7 @@ extension State {
                      paperPhraseStep:       self.paperPhraseStep,
                      rootModal:             self.rootModal,
                      pasteboard:            pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: self.walletState)
+                     isModalDismissalBlocked: self.isModalDismissalBlocked)
     }
     func clone(isModalDismissalBlocked: Bool) -> State {
         return State(isStartFlowVisible:    self.isStartFlowVisible,
@@ -206,34 +194,6 @@ extension State {
                      paperPhraseStep:       self.paperPhraseStep,
                      rootModal:             self.rootModal,
                      pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: isModalDismissalBlocked,
-                     walletState: self.walletState)
-    }
-    func clone(paperPhraseStep: PaperPhraseStep) -> State {
-        return State(isStartFlowVisible:    self.isStartFlowVisible,
-                     pinCreationStep:       self.pinCreationStep,
-                     paperPhraseStep:       paperPhraseStep,
-                     rootModal:             self.rootModal,
-                     pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: self.walletState)
-    }
-    func clone(walletSyncProgress: Double) -> State {
-        return State(isStartFlowVisible:    self.isStartFlowVisible,
-                     pinCreationStep:       self.pinCreationStep,
-                     paperPhraseStep:       self.paperPhraseStep,
-                     rootModal:             self.rootModal,
-                     pasteboard:            self.pasteboard,
-                     isModalDismissalBlocked: self.isModalDismissalBlocked,
-                     walletState: WalletState(isConnected: self.walletState.isConnected, syncProgress: walletSyncProgress, isSyncing: self.walletState.isSyncing))
-    }
-    func clone(walletIsSyncing: Bool) -> State {
-        return State(isStartFlowVisible:    isStartFlowVisible,
-                     pinCreationStep:       pinCreationStep,
-                     paperPhraseStep:       paperPhraseStep,
-                     rootModal:             rootModal,
-                     pasteboard:            pasteboard,
-                     isModalDismissalBlocked: isModalDismissalBlocked,
-                     walletState: WalletState(isConnected: walletState.isConnected, syncProgress: walletState.syncProgress, isSyncing: walletIsSyncing))
+                     isModalDismissalBlocked: isModalDismissalBlocked)
     }
 }

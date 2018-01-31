@@ -14,11 +14,9 @@ class StartFlowPresenter: Subscriber {
     private let rootViewController: UIViewController
     private var navigationController: ModalNavigationController?
     private let navigationControllerDelegate: StartNavigationDelegate
-    private let walletManager: WalletManager
 
-    init(store: Store, walletManager: WalletManager, rootViewController: UIViewController) {
+    init(store: Store, rootViewController: UIViewController) {
         self.store = store
-        self.walletManager = walletManager
         self.rootViewController = rootViewController
         self.navigationControllerDelegate = StartNavigationDelegate(store: store)
         addStartSubscription()
@@ -57,9 +55,7 @@ class StartFlowPresenter: Subscriber {
                             }
 
                             if case .write = $0.paperPhraseStep {
-                                if case .saveSuccess(let pin) = $0.pinCreationStep {
-                                    self.pushWritePaperPhraseViewController(pin: pin)
-                                }
+                                self.pushWritePaperPhraseViewController()
                             }
 
                             if case .confirm = $0.paperPhraseStep {
@@ -69,8 +65,13 @@ class StartFlowPresenter: Subscriber {
     }
 
     private func presentStartFlow() {
-        let startViewController = StartViewController(store: store)
-        navigationController = ModalNavigationController(rootViewController: startViewController)
+        let welcomeViewController = WelcomeViewController(store: store)
+        welcomeViewController.newUserTappedCallback = { [weak self] in
+            guard let myself = self else { return }
+            let startViewController = StartViewController(store: myself.store)
+            myself.navigationController?.pushViewController(startViewController, animated: true)
+        }
+        navigationController = ModalNavigationController(rootViewController: welcomeViewController)
         navigationController?.delegate = navigationControllerDelegate
         if let startFlow = navigationController {
             startFlow.setNavigationBarHidden(true, animated: false)
@@ -119,13 +120,13 @@ class StartFlowPresenter: Subscriber {
         navigationController?.pushViewController(paperPhraseViewController, animated: true)
     }
 
-    private func pushWritePaperPhraseViewController(pin: String) {
+    private func pushWritePaperPhraseViewController() {
         //TODO - This is a pretty back hack. It's due to a limitation in the architecture, where the write state
         //will get triggered when the back button is pressed on the phrase confirm screen
         let writeViewInStack = (navigationController?.viewControllers.filter { $0 is WritePaperPhraseViewController}.count)! > 0
         guard !writeViewInStack else { return }
 
-        let writeViewController = WritePaperPhraseViewController(store: store, walletManager: walletManager, pin: pin)
+        let writeViewController = WritePaperPhraseViewController(store: store)
         writeViewController.title = "Paper Key"
 
         let button = UIButton.close
