@@ -118,7 +118,7 @@ class BRWallet {
     // all previously genereated internal and external addresses
     var allAddresses: [String] {
         var addrs = [BRAddress](repeating: BRAddress(), count: BRWalletAllAddrs(cPtr, nil, 0))
-        guard BRWalletAllAddrs(cPtr, &addrs, addrs.count) == addrs.count else { return [] }
+        BRWalletAllAddrs(cPtr, &addrs, addrs.count)
         return addrs.map({ $0.description })
     }
     
@@ -130,7 +130,7 @@ class BRWallet {
     // transactions registered in the wallet, sorted by date, oldest first
     var transactions: [BRTxRef?] {
         var transactions = [BRTxRef?](repeating: nil, count: BRWalletTransactions(cPtr, nil, 0))
-        guard BRWalletTransactions(cPtr, &transactions, transactions.count) == transactions.count else { return [] }
+        BRWalletTransactions(cPtr, &transactions, transactions.count)
         return transactions
     }
     
@@ -332,16 +332,16 @@ class BRPeerManager {
     }
     
     // publishes tx to bitcoin network
-    func publishTx(_ tx: BRTxRef, completion: @escaping (Bool, BRPeerManagerError?) -> ()) {
+    func publishTx(_ tx: BRTxRef, completion: @escaping (BRPeerManagerError?) -> ()) {
         BRPeerManagerPublishTx(cPtr, tx, Unmanaged.passRetained(CompletionWrapper(completion)).toOpaque())
         { (info, error) in
             guard let info = info else { return }
             guard error == 0 else {
                 let err = BRPeerManagerError.posixError(errorCode: error, description: String(cString: strerror(error)))
-                return Unmanaged<CompletionWrapper>.fromOpaque(info).takeRetainedValue().completion(false, err)
+                return Unmanaged<CompletionWrapper>.fromOpaque(info).takeRetainedValue().completion(err)
             }
             
-            Unmanaged<CompletionWrapper>.fromOpaque(info).takeRetainedValue().completion(true, nil)
+            Unmanaged<CompletionWrapper>.fromOpaque(info).takeRetainedValue().completion(nil)
         }
     }
     
@@ -356,9 +356,9 @@ class BRPeerManager {
     }
     
     private class CompletionWrapper {
-        let completion: (Bool, BRPeerManagerError?) -> ()
+        let completion: (BRPeerManagerError?) -> ()
         
-        init(_ completion: @escaping (Bool, BRPeerManagerError?) -> ()) {
+        init(_ completion: @escaping (BRPeerManagerError?) -> ()) {
             self.completion = completion
         }
     }
