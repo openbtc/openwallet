@@ -4163,7 +4163,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				INFOPLIST_FILE = "openwallet WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -4179,7 +4179,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				INFOPLIST_FILE = "openwallet WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -4196,7 +4196,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				IBSC_MODULE = openwallet_WatchKit_Extension;
 				INFOPLIST_FILE = "openwallet WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -4214,7 +4214,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				IBSC_MODULE = openwallet_WatchKit_Extension;
 				INFOPLIST_FILE = "openwallet WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -4235,7 +4235,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = openwallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -4254,7 +4254,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/**";
 				INFOPLIST_FILE = openwallet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4323,7 +4323,7 @@
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.MessagesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4337,7 +4337,7 @@
 				INFOPLIST_FILE = MessagesExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.MessagesExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.MessagesExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4349,7 +4349,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.TodayExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.TodayExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4361,7 +4361,7 @@
 				DEVELOPMENT_TEAM = 4R7S6N88W9;
 				INFOPLIST_FILE = TodayExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.TodayExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.TodayExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4374,7 +4374,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -4387,7 +4387,7 @@
 				INFOPLIST_FILE = NotificationServiceExtension/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.voisine.openwallet.NotificationServiceExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.openwalet.new.NotificationServiceExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
