@@ -8,23 +8,84 @@
 
 import Foundation
 
-class URLController {
+class URLController : Trackable {
 
     init(store: Store) {
         self.store = store
     }
 
+    var xSource, xSuccess, xError, uri: String?
+
     func handleUrl(_ url: URL) -> Bool {
-        guard url.scheme == "bitcoin" || url.scheme == "open" else {
+        saveEvent("send:handle_url", attributes: [
+                "scheme" : url.scheme ?? C.null,
+                "host" : url.host ?? C.null,
+                "path" : url.path ])
+
+        switch url.scheme ?? "" {
+        case "open":
+            guard let query = url.query else { return false }
+            for component in query.components(separatedBy: "&") {
+                let pair = component.components(separatedBy: "+")
+                if pair.count < 2 { continue }
+                let key = pair[0]
+                var value = component.substring(from: component.index(key.endIndex, offsetBy: 2))
+                value = (value.replacingOccurrences(of: "+", with: " ") as NSString).removingPercentEncoding!
+                switch key {
+                case "x-source":
+                    xSource = value
+                case "x-success":
+                    xSuccess = value
+                case "x-error":
+                    xError = value
+                case "uri":
+                    uri = value
+                default:
+                    print("Key not supported: \(key)")
+                }
+            }
+
+            if url.host == "scanqr" || url.path == "/scanqr" {
+                scanQr()
+            } else if url.host == "addresslist" || url.path == "/addresslist" {
+                copyWalletAddresses()
+            } else if isBitcoinUri(url: url, uri: uri) {
+                handleBitcoinUrl()
+            } else if BRBitID.isBitIDURL(url) {
+                handleBitId()
+            }
+            return true
+        case "bitcoin":
+            if let request = PaymentRequest(string: url.absoluteString) {
+                store.trigger(name: .receivedPaymentRequest(request))
+                return true
+            } else {
+                return false
+            }
+        default:
             return false
         }
+    }
 
+    private func isBitcoinUri(url: URL, uri: String?) -> Bool {
+        guard let uri = uri else { return false }
+        guard let bitcoinUrl = URL(string: uri) else { return false }
+        return (url.host == "bitcoin-uri" || url.path == "/bitcoin-uri") && bitcoinUrl.scheme == "bitcoin"
+    }
 
-        if url.scheme == "bitcoin" {
-            
-        }
+    private func scanQr() {
 
-        return true
+    }
+
+    private func copyWalletAddresses() {
+
+    }
+
+    private func handleBitcoinUrl() {
+
+    }
+
+    private func handleBitId() {
 
     }
 
