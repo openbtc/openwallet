@@ -50,7 +50,11 @@ class UpdatePinViewController : UIViewController, Subscriber {
                 if !isCreatingPin {
                     instruction.pushNewText(S.UpdatePin.enterNew)
                 }
-                caption.text = S.UpdatePin.caption
+                if type == .creationNoPhrase {
+                    caption.text = S.UpdatePin.pinCreationMessage
+                } else {
+                    caption.text = S.UpdatePin.caption
+                }
             case .confirmNew:
                 if isCreatingPin {
                     header.text = S.UpdatePin.createTitleConfirm
